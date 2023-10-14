@@ -37,6 +37,8 @@ function Login() {
       })
       .then((response) => {
         toast.success("login success... kindly handle data with care!!!");
+        setCookie('sessionid',response.data['sessionid'],{expires:7});
+        
         history.push("/");
         // Handle the successful response
 
