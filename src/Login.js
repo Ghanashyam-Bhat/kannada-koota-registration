@@ -37,7 +37,7 @@ function Login() {
       })
       .then((response) => {
         toast.success("login success... kindly handle data with care!!!");
-        history.push("/entry");
+        history.push("/");
         // Handle the successful response
 
         console.log("Response:", response.data);
