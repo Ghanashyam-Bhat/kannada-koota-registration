@@ -25,7 +25,7 @@ function Login() {
 
     // Send a POST request with JSON data using Axios
     axios
-      .post("https://kannada-koota-tickets.vercel.app/auth/login/", jsonData, {
+      .post("/auth/login/", jsonData, {
         withCredentials:true,
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ function Login() {
           value={formData.email}
           onChange={handleChange}
           required
-          placeholder="Email"
+          placeholder="username"
         />
       </div>
       <div className="form-control">

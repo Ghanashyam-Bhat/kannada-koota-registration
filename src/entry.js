@@ -10,7 +10,7 @@ function Entry() {
 
   useEffect(()=>{
   
-  axios.get("https://kannada-koota-tickets.vercel.app/auth/status/", {     
+  axios.get("/auth/status/", {     
         withCredentials:true
       })
     .then((response) => {
@@ -44,7 +44,7 @@ function Entry() {
 
     // Send a POST request with JSON data using Axios
     axios
-      .post("https://kannada-koota-tickets.vercel.app/auth/submit/", jsonData, {
+      .post("/auth/submit/", jsonData, {
         withCredentials:true,
         headers: {
           "Content-Type": "application/json",
