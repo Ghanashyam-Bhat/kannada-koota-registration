@@ -29,7 +29,7 @@ function Login() {
 
     // Send a POST request with JSON data using Axios
     axios
-      .post("https://kannada-koota-tickets.vercel.app/proxy/login/", jsonData, {
+      .post("https://kannada-koota-tickets.vercel.app/auth/proxy/login/", jsonData, {
         withCredentials:true,
         headers: {
           "Content-Type": "application/json",
