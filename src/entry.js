@@ -10,8 +10,7 @@ function Entry() {
 
   useEffect(()=>{
   
-  axios.get("/auth/status/", {     
-        withCredentials:true
+  axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
       })
     .then((response) => {
         toast.success("Login successfully!");
@@ -27,7 +26,8 @@ function Entry() {
     universityId: "",
     email: "",
     contact: "",
-    paymentMethod: "Online", // Default to "Cash"
+    paymentMethod: "Online", 
+    cookies: document.cookie,// Default to "Cash"
   });
 
   const handleChange = (e) => {
@@ -37,15 +37,35 @@ function Entry() {
       [name]: value,
     });
   };
+  const handleLogout=()=>{
+    axios
+      .post("https://kannada-koota-tickets.vercel.app/auth/logout/",{cookies:document.cookie},  {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        toast.success("logged Successfully! hope you didnt make any mistakes");
+        
+        // Handle the successful response
 
+        console.log("Response:", response.data);
+        history.replace('/login')
+
+      })
+      .catch((error) => {
+        toast.error("Try again!!")
+        // Handle any errors
+        console.error("Error sending POST request:", error);
+      });
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const jsonData = JSON.stringify(formData);
 
     // Send a POST request with JSON data using Axios
     axios
-      .post("/auth/submit/", jsonData, {
-        withCredentials:true,
+      .post("https://kannada-koota-tickets.vercel.app/ticket/submit/", jsonData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -57,7 +77,8 @@ function Entry() {
             universityId: "",
             email: "",
             contact: "",
-            paymentMethod: "Online", // Default to "Cash"
+            paymentMethod: "Online",
+            cookies: document.cookie, // Default to "Cash"
           })
         
         // Handle the successful response
@@ -75,6 +96,10 @@ function Entry() {
 
   return (
     <div>
+    <button className="logout-button" onClick={handleLogout}>
+  Logout
+</button>
+
       <h2>ಕನ್ನಡ ಕೂಟ</h2>
       <div className="container">
         <form onSubmit={handleSubmit}>

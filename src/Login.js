@@ -2,6 +2,7 @@ import './App.css';
 import axios from 'axios';
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Cookies from 'js-cookie';
 import { toast } from "react-toastify";
 
 function Login() {
@@ -9,6 +10,7 @@ function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    cookies: document.cookie,
   });
 
   const handleChange = (e) => {
@@ -18,14 +20,16 @@ function Login() {
       [name]: value,
     });
   };
-
+  const setCookie = (name, value, options = {}) => {
+    Cookies.set(name, value, options);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const jsonData = JSON.stringify(formData);
 
     // Send a POST request with JSON data using Axios
     axios
-      .post("/auth/login/", jsonData, {
+      .post("https://kannada-koota-tickets.vercel.app/proxy/login/", jsonData, {
         withCredentials:true,
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +67,7 @@ function Login() {
           value={formData.email}
           onChange={handleChange}
           required
-          placeholder="username"
+          placeholder="Username"
         />
       </div>
       <div className="form-control">
