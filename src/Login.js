@@ -25,7 +25,7 @@ function Login() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const jsonData = JSON.stringify(formData);
+    // const jsonData = JSON.stringify(formData);
 
     // Send a POST request with JSON data using Axios
     axios
