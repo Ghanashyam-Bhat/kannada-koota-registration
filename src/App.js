@@ -14,7 +14,6 @@ function App() {
         <Switch>
           
           <Route exact path='/' component={Entry}/>   
-
           <Route path='/login' component={Login}/> 
           
         </Switch>
