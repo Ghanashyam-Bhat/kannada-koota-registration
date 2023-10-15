@@ -116,6 +116,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="Name"
+              autocomplete="off"
             />
           </div>
           <div className="form-control">
@@ -126,6 +127,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="University ID"
+              autocomplete="off"
             />
           </div>
           <div className="form-control">
@@ -136,6 +138,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="Email"
+              autocomplete="off"
             />
           </div>
           <div className="form-control">
@@ -146,6 +149,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="Contact"
+              autocomplete="off"
             />
           </div>
           
