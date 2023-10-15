@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import React, { useState,useEffect} from "react";
-import { toast } from "react-toastify";
 
 function Entry() {
   const history = useHistory();
@@ -13,7 +12,7 @@ function Entry() {
   axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
       })
     .then((response) => {
-        toast.success("Login successfully!");
+      console.log(response);
     })
     .catch((error) => {
       history.replace('/login');
@@ -29,6 +28,8 @@ function Entry() {
     paymentMethod: "Online", 
     cookies: document.cookie,// Default to "Cash"
   });
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission status
+  const [submissionMessage, setSubmissionMessage] = useState(""); // State to display submission message
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +46,6 @@ function Entry() {
         },
       })
       .then((response) => {
-        toast.success("logged Successfully! hope you didnt make any mistakes");
         
         // Handle the successful response
 
@@ -54,16 +54,14 @@ function Entry() {
 
       })
       .catch((error) => {
-        toast.error("Try again!!")
         // Handle any errors
         console.error("Error sending POST request:", error);
       });
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const jsonData = JSON.stringify(formData);
-
-    // Send a POST request with JSON data using Axios
+    setIsSubmitting(true); // Start the submission state
+    setSubmissionMessage("");
     axios
       .post("https://kannada-koota-tickets.vercel.app/ticket/submit/", formData, {
         headers: {
@@ -71,7 +69,6 @@ function Entry() {
         },
       })
       .then((response) => {
-        toast.success("Form submitted successfully!");
         setFormData({
             name: "",
             universityId: "",
@@ -80,13 +77,16 @@ function Entry() {
             paymentMethod: "Online",
             cookies: document.cookie, // Default to "Cash"
           })
+          setIsSubmitting(false); // Reset the submission state
+          setSubmissionMessage("Data successfully submitted");
         
         // Handle the successful response
 
         console.log("Response:", response.data);
       })
       .catch((error) => {
-        toast.error("Try again!!")
+        setIsSubmitting(false);
+        setSubmissionMessage("Error occured Please try again");
         // Handle any errors
         console.error("Error sending POST request:", error);
       });
@@ -154,9 +154,12 @@ function Entry() {
               <option value="Cash">Cash</option>
             </select>
           </div>
-          <button className="btn" type="submit">
-            Submit
+          <button className="btn" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
+          {submissionMessage && (
+            <p>{submissionMessage} (This message will disappear when you start filling another response.)</p>
+          )}
         </form>
       </div>
     </div>

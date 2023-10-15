@@ -30,7 +30,6 @@ function Login() {
     e.preventDefault();
     setIsLoading(true); // Start the loading state
     setLoginFailed(false); // Reset login failure 
-    setTimeout(() => {
     axios
       .post("https://kannada-koota-tickets.vercel.app/auth/proxy/login/", formData, {
         withCredentials:true,
@@ -58,7 +57,7 @@ function Login() {
           setLoginFailed(true);
         console.error("Error sending POST request:", error);
       });
-    },5000);
+    
 
   };
   return (
