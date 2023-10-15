@@ -42,7 +42,7 @@ function Entry() {
     });
   };
   const handleLogout=()=>{
-    setlogoutmsg("Logging out")
+    setlogoutmsg("Logging out...")
     axios
       .post("https://kannada-koota-tickets.vercel.app/auth/logout/",{cookies:document.cookie},  {
         headers: {
