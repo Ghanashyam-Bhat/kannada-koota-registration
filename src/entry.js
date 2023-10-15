@@ -7,17 +7,17 @@ import React, { useState,useEffect} from "react";
 function Entry() {
   const history = useHistory();
 
-  useEffect(()=>{
+  // useEffect(()=>{
   
-  axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
-      })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      history.replace('/login');
-    });
-  },[]);
+  // axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
+  //     })
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     history.replace('/login');
+  //   });
+  // },[]);
 
 
   const [formData, setFormData] = useState({
@@ -30,6 +30,8 @@ function Entry() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission status
   const [submissionMessage, setSubmissionMessage] = useState(""); // State to display submission message
+  const [setlogout, setlogoutmsg] = useState("Logout");
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +42,7 @@ function Entry() {
     });
   };
   const handleLogout=()=>{
+    setlogoutmsg("Logging out")
     axios
       .post("https://kannada-koota-tickets.vercel.app/auth/logout/",{cookies:document.cookie},  {
         headers: {
@@ -56,6 +59,7 @@ function Entry() {
       })
       .catch((error) => {
         // Handle any errors
+        setlogoutmsg("Logout")
         console.error("Error sending POST request:", error);
       });
   }
@@ -98,7 +102,7 @@ function Entry() {
   return (
     <div>
     <button className="logout-button" onClick={handleLogout}>
-  Logout
+  {setlogout}
 </button>
 
       <h2>ಕನ್ನಡ ಕೂಟ</h2>
