@@ -144,22 +144,38 @@ function Entry() {
               placeholder="Contact"
             />
           </div>
-          <div className="form-control">
-            <select
-              name="paymentMethod"
-              value={formData.paymentMethod}
-              onChange={handleChange}
-            >
-              <option value="Online">Online</option>
+          
+<div className="form-control">
+  <div className="radio-option">
+    <input
+      type="radio"
+      name="paymentMethod"
+      value="Online"
+      checked={formData.paymentMethod === "Online"}
+      onChange={handleChange}
+    />
+    <label htmlFor="online">Online</label>
+  </div>
+  <div className="radio-option">
+    <input
+      type="radio"
+      name="paymentMethod"
+      value="Cash"
+      checked={formData.paymentMethod === "Cash"}
+      onChange={handleChange}
+    />
+    <label htmlFor="cash">Cash</label>
+  </div>
+</div>
 
-              <option value="Cash">Cash</option>
-            </select>
-          </div>
+    
+    {/* Add more radio buttons as needed */}
+
           <button className="btn" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
           {submissionMessage && (
-            <p>{submissionMessage} (This message will disappear when you start filling another response.)</p>
+            <p>{submissionMessage} </p>
           )}
         </form>
       </div>

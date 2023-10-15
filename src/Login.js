@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 function Login() {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
-  const [loginFailed, setLoginFailed] = useState(false); // State to track login failure
+  const [submissionMessage, setSubmissionMessage] = useState(""); // State to display submission message
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,7 +29,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true); // Start the loading state
-    setLoginFailed(false); // Reset login failure 
     axios
       .post("https://kannada-koota-tickets.vercel.app/auth/proxy/login/", formData, {
         withCredentials:true,
@@ -54,7 +53,7 @@ function Login() {
             password: "",
           })
           setIsLoading(false); // Reset the loading state
-          setLoginFailed(true);
+          setSubmissionMessage("Login failed try again!!")
         console.error("Error sending POST request:", error);
       });
     
@@ -94,7 +93,9 @@ function Login() {
               Login
             </button>
           )}
-          {loginFailed && <p>Login failed. Please try again.</p>}
+          {submissionMessage && (
+            <p>{submissionMessage} </p>
+          )}
     </form>
     </div>
     </div>
