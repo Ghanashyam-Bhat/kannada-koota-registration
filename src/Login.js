@@ -1,12 +1,15 @@
 import './App.css';
 import axios from 'axios';
-import React, { useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 function Login() {
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false); // State to track loading status
+  const [loginFailed, setLoginFailed] = useState(false); // State to track login failure
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,9 +28,9 @@ function Login() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const jsonData = JSON.stringify(formData);
-
-    // Send a POST request with JSON data using Axios
+    setIsLoading(true); // Start the loading state
+    setLoginFailed(false); // Reset login failure 
+    setTimeout(() => {
     axios
       .post("https://kannada-koota-tickets.vercel.app/auth/proxy/login/", formData, {
         withCredentials:true,
@@ -36,26 +39,27 @@ function Login() {
         },
       })
       .then((response) => {
-        toast.success("login success... kindly handle data with care!!!");
+        // toast.success("login success... kindly handle data with care!!!");
         setCookie('sessionid',response.data['sessionid'],{expires:7});
         
         history.push("/");
         // Handle the successful response
-
+        setIsLoading(false);
         console.log("Response:", response.data);
       })
       .catch((error) => {
         // Handle any errors
-        toast.error("Try again!!")
+        // toast.error("Try again!!")
         setFormData({
             email: "",
             password: "",
           })
+          setIsLoading(false); // Reset the loading state
+          setLoginFailed(true);
         console.error("Error sending POST request:", error);
       });
+    },5000);
 
-    // You can access the collected data in formData and perform actions (e.g., submit to a server) here.
-    console.log(formData);
   };
   return (
     <div>
@@ -82,7 +86,16 @@ function Login() {
           placeholder="Password"
         />
       </div>
-      <button className="btn" type="submit">Login</button>
+      {isLoading ? (
+            <button className="btn" type="button" disabled>
+              Authenticating...
+            </button>
+          ) : (
+            <button className="btn" type="submit">
+              Login
+            </button>
+          )}
+          {loginFailed && <p>Login failed. Please try again.</p>}
     </form>
     </div>
     </div>
