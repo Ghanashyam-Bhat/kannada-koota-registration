@@ -33,6 +33,7 @@ function Entry() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setSubmissionMessage("");
     setFormData({
       ...formData,
       [name]: value,
