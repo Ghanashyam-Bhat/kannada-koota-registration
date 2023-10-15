@@ -7,17 +7,17 @@ import React, { useState,useEffect} from "react";
 function Entry() {
   const history = useHistory();
 
-  // useEffect(()=>{
+  useEffect(()=>{
   
-  // axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
-  //     })
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch((error) => {
-  //     history.replace('/login');
-  //   });
-  // },[]);
+  axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
+      })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      history.replace('/login');
+    });
+  },[]);
 
 
   const [formData, setFormData] = useState({
