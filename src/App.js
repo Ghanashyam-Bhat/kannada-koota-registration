@@ -4,7 +4,6 @@ import {Switch, Route} from 'react-router-dom';
 import ReloadOnBackButton from './Reload';
 import Login from './Login';
 import Entry from './entry';
-import Scan from './scan';
 
 
 
@@ -14,9 +13,7 @@ function App() {
 
         <Switch>
           
-          {/* <Route exact path='/' component={Entry}/>    */}
-          <Route exact path='/' component={Scan}/>   
-
+          <Route exact path='/' component={Entry}/>   
           <Route path='/login' component={Login}/> 
           
         </Switch>

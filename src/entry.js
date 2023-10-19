@@ -153,28 +153,28 @@ function Entry() {
             />
           </div>
           
-      <div className="form-control">
-        <div className="radio-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="Online"
-            checked={formData.paymentMethod === "Online"}
-            onChange={handleChange}
-          />
-          <label htmlFor="online">Online</label>
-        </div>
-        <div className="radio-option">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="Cash"
-            checked={formData.paymentMethod === "Cash"}
-            onChange={handleChange}
-          />
-          <label htmlFor="cash">Cash</label>
-        </div>
-      </div>
+<div className="form-control">
+  <div className="radio-option">
+    <input
+      type="radio"
+      name="paymentMethod"
+      value="Online"
+      checked={formData.paymentMethod === "Online"}
+      onChange={handleChange}
+    />
+    <label htmlFor="online">Online</label>
+  </div>
+  <div className="radio-option">
+    <input
+      type="radio"
+      name="paymentMethod"
+      value="Cash"
+      checked={formData.paymentMethod === "Cash"}
+      onChange={handleChange}
+    />
+    <label htmlFor="cash">Cash</label>
+  </div>
+</div>
 
     
     {/* Add more radio buttons as needed */}
@@ -190,6 +190,5 @@ function Entry() {
     </div>
   );
 }
-
 
 export default Entry;
