@@ -89,7 +89,12 @@ body {
 }
 
 
-
+.radiodiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* flex-direction: column; */
+}
 /* Add this CSS to your existing stylesheet */
 .radio-option {
   display: flex;
@@ -100,7 +105,7 @@ body {
 }
 
 .radio-option input[type="radio"] {
-  margin-right: 8px; /* Add spacing between radio button and label */
+  margin-right: 8px; 
 }
 
 h2{

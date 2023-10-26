@@ -2,34 +2,32 @@ import './App.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 function Entry() {
   const history = useHistory();
 
-  useEffect(()=>{
-  
-  axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", {cookies:document.cookie},{     
+  useEffect(() => {
+    axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", { cookies: document.cookie })
+      .then((response) => {
+        console.log(response);
       })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      history.replace('/login');
-    });
-  },[]);
-
+      .catch((error) => {
+        history.replace('/login');
+      });
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
     universityId: "",
     email: "",
     contact: "",
-    paymentMethod: "Online", 
-    cookies: document.cookie,// Default to "Cash"
+    paymentMethod: "Online",
+    ttype: "general",
+    cookies: document.cookie,
   });
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission status
-  const [submissionMessage, setSubmissionMessage] = useState(""); // State to display submission message
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState("");
   const [setlogout, setlogoutmsg] = useState("Logout");
 
 
@@ -41,69 +39,68 @@ function Entry() {
       [name]: value,
     });
   };
-  const handleLogout=()=>{
-    setlogoutmsg("Logging out...")
+
+  const handleLogout = () => {
+    setlogoutmsg("Logging out...");
     axios
-      .post("https://kannada-koota-tickets.vercel.app/auth/logout/",{cookies:document.cookie},  {
+      .post("https://kannada-koota-tickets.vercel.app/auth/logout/", { cookies: document.cookie }, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        
-        // Handle the successful response
-
         console.log("Response:", response.data);
-        history.replace('/login')
-
+        history.replace('/login');
       })
       .catch((error) => {
-        // Handle any errors
-        setlogoutmsg("Logout")
+        setlogoutmsg("Logout");
         console.error("Error sending POST request:", error);
       });
-  }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // Start the submission state
-    setSubmissionMessage("");
-    axios
-      .post("https://kannada-koota-tickets.vercel.app/ticket/submit/", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setFormData({
-            name: "",
-            universityId: "",
-            email: "",
-            contact: "",
-            paymentMethod: "Online",
-            cookies: document.cookie, // Default to "Cash"
+    
+      
+      if (window.confirm(`Please verify your email address::    ${formData.email}\nDo you want to continue?`)) {
+        setIsSubmitting(true); // Start the submission state
+        setSubmissionMessage("");
+      
+        axios
+          .post("https://kannada-koota-tickets.vercel.app/ticket/submit/", formData, {
+            headers: {
+              "Content-Type": "application/json",
+            },
           })
-          setIsSubmitting(false); // Reset the submission state
-          setSubmissionMessage("Data successfully submitted");
-        
-        // Handle the successful response
+          .then((response) => {
+            setFormData({
+              name: "",
+              universityId: "",
+              email: "",
+              contact: "",
+              ttype: "general",
+              paymentMethod: "Online",
+              cookies: document.cookie,
+            });
+            setIsSubmitting(false); // Reset the submission state
+            setSubmissionMessage("Data successfully submitted");
+            console.log("Response:", response.data);
+          })
+          .catch((error) => {
+            setIsSubmitting(false);
+            setSubmissionMessage("Error occurred. Please try again");
+            console.error("Error sending POST request:", error);
+          });
 
-        console.log("Response:", response.data);
-      })
-      .catch((error) => {
-        setIsSubmitting(false);
-        setSubmissionMessage("Error occured Please try again");
-        // Handle any errors
-        console.error("Error sending POST request:", error);
-      });
-
-    // You can access the collected data in formData and perform actions (e.g., submit to a server) here.
+      }
+    
   };
 
   return (
     <div>
-    <button className="logout-button" onClick={handleLogout}>
-  {setlogout}
-</button>
+      <button className="logout-button" onClick={handleLogout}>
+        {setlogout}
+      </button>
 
       <h2>ಕನ್ನಡ ಕೂಟ</h2>
       <div className="container">
@@ -116,7 +113,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="Name"
-              autocomplete="off"
+              autoComplete="off"
             />
           </div>
           <div className="form-control">
@@ -127,7 +124,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="University ID"
-              autocomplete="off"
+              autoComplete="off"
             />
           </div>
           <div className="form-control">
@@ -138,7 +135,7 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="Email"
-              autocomplete="off"
+              autoComplete="off"
             />
           </div>
           <div className="form-control">
@@ -149,42 +146,74 @@ function Entry() {
               onChange={handleChange}
               required
               placeholder="Contact"
-              autocomplete="off"
+              autoComplete="off"
             />
           </div>
-          
-<div className="form-control">
-  <div className="radio-option">
-    <input
-      type="radio"
-      name="paymentMethod"
-      value="Online"
-      checked={formData.paymentMethod === "Online"}
-      onChange={handleChange}
-    />
-    <label htmlFor="online">Online</label>
+
+
+<div clasName="radiodiv">
+  <div>
+    <div className="form-control">
+      <div className="radio-option">
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="Online"
+          checked={formData.paymentMethod === "Online"}
+          onChange={handleChange}
+        />
+        <label htmlFor="online">Online</label>
+      </div>
+      <div className="radio-option">
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="Cash"
+          checked={formData.paymentMethod === "Cash"}
+          onChange={handleChange}
+        />
+        <label htmlFor="cash">Cash</label>
+      </div>
+    </div>
   </div>
-  <div className="radio-option">
-    <input
-      type="radio"
-      name="paymentMethod"
-      value="Cash"
-      checked={formData.paymentMethod === "Cash"}
-      onChange={handleChange}
-    />
-    <label htmlFor="cash">Cash</label>
+  
+  
+  <div>
+  <div className="form-control">
+    <div className="radio-option">
+      <input
+        type="radio"
+        name="ttype"
+        value="general"
+        checked={formData.ttype === "general"}
+        onChange={handleChange}
+      />
+      <label htmlFor="general">General</label>
+    </div>
+    <div className="radio-option">
+      <input
+        type="radio"
+        name="ttype"
+        value="VIP"
+        checked={formData.ttype === "VIP"}
+        onChange={handleChange}
+      />
+      <label htmlFor="vip">VIP</label>
+    </div>
+    </div>
   </div>
 </div>
 
+
+
     
-    {/* Add more radio buttons as needed */}
+          {/* Rest of your form elements */}
+          {/* ... */}
 
           <button className="btn" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
-          {submissionMessage && (
-            <p>{submissionMessage} </p>
-          )}
+          {submissionMessage && <p>{submissionMessage} </p>}
         </form>
       </div>
     </div>
@@ -192,3 +221,6 @@ function Entry() {
 }
 
 export default Entry;
+
+          
+          
