@@ -8,7 +8,7 @@ function Entry() {
   const history = useHistory();
 
   useEffect(() => {
-    axios.post("${process.env.REACT_APP_HOST}/auth/status/", { cookies: document.cookie })
+    axios.post("https://kannada-koota-tickets.vercel.app/auth/status/", { cookies: document.cookie })
       .then((response) => {
         console.log(response);
       })
@@ -43,7 +43,7 @@ function Entry() {
   const handleLogout = () => {
     setlogoutmsg("Logging out...");
     axios
-      .post("${process.env.REACT_APP_HOST}/auth/logout/", { cookies: document.cookie }, {
+      .post("https://kannada-koota-tickets.vercel.app/auth/logout/", { cookies: document.cookie }, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -67,7 +67,7 @@ function Entry() {
         setSubmissionMessage("");
       
         axios
-          .post("${process.env.REACT_APP_HOST}/ticket/submit/", formData, {
+          .post("https://kannada-koota-tickets.vercel.app/ticket/submit/", formData, {
             headers: {
               "Content-Type": "application/json",
             },
