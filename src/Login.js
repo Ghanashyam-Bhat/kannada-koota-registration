@@ -30,7 +30,7 @@ function Login() {
     e.preventDefault();
     setIsLoading(true); // Start the loading state
     axios
-      .post("https://kannada-koota-tickets.vercel.app/auth/proxy/login/", formData, {
+      .post("${process.env.REACT_APP_HOST}/auth/proxy/login/", formData, {
         withCredentials:true,
         headers: {
           "Content-Type": "application/json",
