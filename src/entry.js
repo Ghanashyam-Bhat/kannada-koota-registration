@@ -62,7 +62,7 @@ function Entry() {
     e.preventDefault();
     
       
-      if (window.confirm(`Please verify your email address::    ${formData.email}\nDo you want to continue?`)) {
+      if (window.confirm(`\nPlease verify your email address:\n${formData.email}\n`)) {
         setIsSubmitting(true); // Start the submission state
         setSubmissionMessage("");
       
